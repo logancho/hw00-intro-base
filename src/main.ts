@@ -14,12 +14,19 @@ import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 const controls = {
   tesselations: 5,
   'Load Scene': loadScene, // A function pointer, essentially
+  // default_color: vec3.fromValues(1, 0, 0)
+  R: 1,
+  G: 1,
+  B: 1,
 };
 
 let icosphere: Icosphere;
 let square: Square;
 let cube: Cube;
 let prevTesselations: number = 5;
+let prevR: number = 1;
+let prevG: number = 1;
+let prevB: number = 1;
 
 function loadScene() {
   icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, controls.tesselations);
@@ -30,6 +37,11 @@ function loadScene() {
   cube = new Cube(vec3.fromValues(0, 0, 0));
   cube.create();
 }
+
+
+//Update the existing GUI in main.ts with:
+//    a parameter to alter the color passed to u_Color in the Lambert shader. 
+
 
 function main() {
   // Initial display for framerate
@@ -44,6 +56,9 @@ function main() {
   const gui = new DAT.GUI();
   gui.add(controls, 'tesselations', 0, 8).step(1);
   gui.add(controls, 'Load Scene');
+  gui.add(controls, 'R', 0.0, 1.0).step(0.01);
+  gui.add(controls, 'G', 0.0, 1.0).step(0.01);
+  gui.add(controls, 'B', 0.0, 1.0).step(0.01);
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -81,11 +96,26 @@ function main() {
       icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, prevTesselations);
       icosphere.create();
     }
+    if(controls.R != prevR)
+    {
+      prevR = controls.R;
+    }
+    if(controls.G != prevG)
+    {
+      prevG = controls.G;
+    }
+    if(controls.B != prevB)
+    {
+      prevB = controls.B;
+    }
+
     renderer.render(camera, lambert, [
       // icosphere,
       // square,
       cube,
-    ]);
+    ],
+    vec3.fromValues(controls.R, controls.G, controls.B));
+
     stats.end();
 
     // Tell the browser to call `tick` again whenever it renders a new frame
