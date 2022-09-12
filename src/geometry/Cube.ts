@@ -164,6 +164,12 @@ class Cube extends Drawable {
     this.positions.set([0.0, 0.0, 1.0, 1.0], idx);
   }
 
+  centerCube() {
+      for (let i = 0; i < 96; i++) {
+          this.positions[i] -= 0.5;
+      }
+  }
+
   create() {
 
     this.indices = new Uint32Array(36);
@@ -174,6 +180,7 @@ class Cube extends Drawable {
     this.createCubeIndices();
     this.createCubeVertexNormals();
     this.createCubeVertexPositions();
+    this.centerCube();
     
     //2. call generate for all 3
     this.generateIdx();
