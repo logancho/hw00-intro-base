@@ -15,9 +15,9 @@ const controls = {
   tesselations: 5,
   'Load Scene': loadScene, // A function pointer, essentially
   // default_color: vec3.fromValues(1, 0, 0)
-  R: 1,
-  G: 1,
-  B: 1,
+  R: 1.0,
+  G: 0.0,
+  B: 0.0,
 };
 
 let icosphere: Icosphere;
@@ -25,8 +25,8 @@ let square: Square;
 let cube: Cube;
 let prevTesselations: number = 5;
 let prevR: number = 1;
-let prevG: number = 1;
-let prevB: number = 1;
+let prevG: number = 0.0;
+let prevB: number = 0.0;
 
 function loadScene() {
   icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, controls.tesselations);
@@ -84,6 +84,12 @@ function main() {
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/lambert-frag.glsl')),
   ]);
 
+  const custom_perlin = new ShaderProgram([
+    new Shader(gl.VERTEX_SHADER, require('./shaders/lambert-vert.glsl')),
+    new Shader(gl.FRAGMENT_SHADER, require('./shaders/customPerlin-frag.glsl')),
+  ]);
+
+
   // This function will be called every frame
   function tick() {
     camera.update();
@@ -109,7 +115,7 @@ function main() {
       prevB = controls.B;
     }
 
-    renderer.render(camera, lambert, [
+    renderer.render(camera, custom_perlin, [
       // icosphere,
       // square,
       cube,
