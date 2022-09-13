@@ -9,6 +9,9 @@ Here's a cool screenshot : )!:
 ![](./screenshot.png)
 
 
+For some extra details, for Q4, I decided to add R,G and B sliders that step by 0.01, that affect the u_color that is passed down to my fragment shader.
+My noise function is a standard perlin noise, and my trig vertex deformation is a sin wave, where I pulse each face of my cube in the direction of each face's normal in a sin pattern!
+
 # HW 0: Intro to Javascript and WebGL
 
 <p align="center">
