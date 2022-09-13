@@ -27,6 +27,8 @@ let prevTesselations: number = 5;
 let prevR: number = 1;
 let prevG: number = 0.0;
 let prevB: number = 0.0;
+//time:
+let time: number = 0.0;
 
 function loadScene() {
   icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, controls.tesselations);
@@ -73,7 +75,7 @@ function main() {
   // Initial call to load scene
   loadScene();
 
-  const camera = new Camera(vec3.fromValues(5, 5, 5), vec3.fromValues(0, 0, 0));
+  const camera = new Camera(vec3.fromValues(5, 5, 5), vec3.fromValues(0.5, 0.5, 0.5));
 
   const renderer = new OpenGLRenderer(canvas);
   renderer.setClearColor(0.2, 0.2, 0.2, 1);
@@ -85,13 +87,14 @@ function main() {
   ]);
 
   const custom_perlin = new ShaderProgram([
-    new Shader(gl.VERTEX_SHADER, require('./shaders/lambert-vert.glsl')),
+    new Shader(gl.VERTEX_SHADER, require('./shaders/trig-vert.glsl')),
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/customPerlin-frag.glsl')),
   ]);
 
 
   // This function will be called every frame
   function tick() {
+    time++;
     camera.update();
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
@@ -115,12 +118,16 @@ function main() {
       prevB = controls.B;
     }
 
+    //Add time input into this call!!!
+
     renderer.render(camera, custom_perlin, [
       // icosphere,
       // square,
       cube,
-    ],
-    vec3.fromValues(controls.R, controls.G, controls.B));
+      ],
+      vec3.fromValues(controls.R, controls.G, controls.B),
+      time
+    );
 
     stats.end();
 

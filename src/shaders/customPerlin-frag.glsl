@@ -90,7 +90,7 @@ float grad(int hash, float x, float y, float z) {
   }
 }
 
-int repeat = 30;
+int repeat = 200;
 
 int inc(int num) {
     num++;
@@ -99,12 +99,8 @@ int inc(int num) {
 }
 
 float perlinNoise(vec3 i) {
-//Dont mix up i and j!
-  // 1. Step 1, populate the look-up table
-  // int x = int(i.x);
-  // int y = int(i.y);
-  // int z = int(i.z);
-    // 2. Find unit grid cell containing point (that is, the integer floats of each coord) (X, Y, Z)
+  //Dont mix up i and j!
+  //0. Set up repeat
     float x = i.x;
     float y = i.y;
     float z = i.z;
@@ -120,6 +116,7 @@ float perlinNoise(vec3 i) {
   }
 
 
+  //1. populate look up table
   int p[512];
   for(int j=0; j<512; j++) {
     p[j] = perm[j % 256]; //I fill up twice of the look-up-table of random numbers to prevent overflow issues
@@ -191,7 +188,5 @@ void main()
                                                         //to simulate ambient lighting. This ensures that faces that are not
                                                         //lit by our point light are not completely black.
     float pNoise = perlinNoise(15.f * vec3(fs_Pos));
-    // out_Col = vec4(lightIntensity * diffuseColor.rgb, 1.f);
-    // out_Col = vec4(pNoise * diffuseColor.rgb, 1.f);
-    out_Col = mix(vec4(1.f, 0.f, 0.f, 1.f), vec4(0.f, 0.f, 1.f, 1.f), pNoise);
+    out_Col = vec4(lightIntensity * vec3(mix(vec4(diffuseColor), vec4(vec3(1.f) - vec3(diffuseColor), 1.f), pNoise)), 1.f);
 }
