@@ -180,7 +180,7 @@ class Cube extends Drawable {
     this.createCubeIndices();
     this.createCubeVertexNormals();
     this.createCubeVertexPositions();
-    this.centerCube();
+    // this.centerCube();
     
     //2. call generate for all 3
     this.generateIdx();
