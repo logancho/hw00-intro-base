@@ -1,3 +1,14 @@
+# Submission:
+
+Unfortunately, I've spent the last hour and a half trying to get my 'live-site' to work, but it only showcases the default project, and none of my actual progress : (.
+
+That said, I had a ton of fun with this project, and have a much more confident understanding of Perlin noise, and noise in general. Additionally, picking up typescript was thankfully less gruesome than I was anticipating. Hope I can get the live site to work at some point, but as it is 11:45pm, and I am at my wits end, a regular project submission will have to do for now ¯\_(ツ)_/¯.
+
+Here's a cool screenshot : )!:
+
+![](./screenshot.png)
+
+
 # HW 0: Intro to Javascript and WebGL
 
 <p align="center">
