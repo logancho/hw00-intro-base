@@ -56,7 +56,7 @@ void main()
     // u_Time;
 
     float amplitude = 1.5f;
-    float rate = 0.2f;
+    float rate = 0.02f;
 
     //tempPos += (sin function with amplitude 2) * normal
     tempPos += amplitude * sin(rate * u_Time) * vec3(normalize(vec4(invTranspose * vec3(vs_Nor), 0)));
